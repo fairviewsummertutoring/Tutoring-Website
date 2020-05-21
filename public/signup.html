@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>
+            Test Deployment
+        </title>
+        <link href="https://fonts.googleapis.com/css?family=Lato:700&display=swap" rel="stylesheet">
+        <script src="https://www.gstatic.com/firebasejs/7.6.1/firebase-app.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/7.6.1/firebase-analytics.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/7.6.1/firebase-database.js"></script>
+        <script src = "config.js"></script>
+
+        <style>
+        body {
+            margin: 0;
+            
+
+            background-image: linear-gradient(to right, #8e78ff, #fc7d7b, #fca5f1, #b5ffff);
+            background-size: 400% 400%;
+
+            animation: gradientBG 40s ease-in infinite;
+
+        }
+
+        @keyframes gradientBG {
+            0% {
+                background-position: 0% 50%;
+
+            }
+            50% {
+                background-position: 100% 50%;
+
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        .center {
+            background-color: white;
+            font-family: 'Lato', sans-serif;
+            text-align: center;
+            color: black;
+            border-radius : 25px;
+            padding: 20px;
+            width: 450px;
+            height: 600px;
+            margin: 2.5% auto 0 auto;
+        }
+
+        input[type=text], select {
+            width: 100%;
+            padding: 12px 20px;
+            margin: 8px 0;
+            display: inline-block;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+
+        input[type=password], select {
+            width: 100%;
+            padding: 12px 20px;
+            margin: 8px 0;
+            display: inline-block;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        .btn {
+            width: 100%;
+            background-color: #94dff1;
+            color: white;
+            padding: 14px 20px;
+            margin: 8px 0;
+            border: none;
+            border-radius: 14px;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background-color: #94dff1;
+        }
+
+        .form1 {
+            width: 400px;
+            height: 420px;
+            text-align: center;
+            border-radius: 5px;
+            background-color: #f2f2f2;
+            padding: 25px;
+        }
+
+        .slider {
+            transition-property:  all;
+            transition-duration: 1s;
+            transition-timing-function: cubic-bezier(0.075, 0.82, 0.165, 1);
+        }
+
+        </style>
+
+
+    </head>
+    <body>
+                <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <div class = "slider">
+
+        <div class = "center">
+            <h1>TSA Tutor App</h1>
+            <p>Register for an Account</p>
+            <div class = "form1">
+                    <input type = "text" placeholder = "first name" id = "firstnameField">
+                    <input type = "text" placeholder = "username" id = "usrField">
+                    <input type = "password" placeholder = "password" id = "passwordField">
+                    <input type = "password" placeholder = "confirm password" id = "confirmField">
+                    <select id = "role" name = "role">
+                        <option value="" disabled selected>Choose a role</option>
+                        <option value = "Student">Student</option>
+                        <option value = "Tutor">Tutor</option>
+                    </select>
+                    <select id = "field" name = "field">
+                        <option value = "" disabled selected>Choose a relevant field</option>
+                        <option value = "Math">Math</option>
+                        <option value = "Computer Science">Computer Science</option>
+                        <option value = "Science">Science</option>
+                        <option value = "Language Arts">Language Arts</option>
+                        <option value = "Social Sciences">Social Sciences</option>
+                        <option value = "World Languages">World Languages</option>
+                    </select>
+                    <button id = "button">Join Now</button>
+
+            </div>
+        </div>
+    </div>
+
+    </body>
+    <script>
+    
+    let button = document.getElementById("button");
+
+    button.addEventListener("click", function(){
+        let firstname = document.getElementById("firstnameField").value;
+        let username = document.getElementById("usrField").value;
+        let role = document.getElementById("role").value;
+        let field = document.getElementById("field").value;
+
+        var isDone = false;
+
+        if (document.getElementById("passwordField").value == document.getElementById("confirmField").value){
+            let password = document.getElementById("passwordField").value;
+            
+            var data = {
+                firstname: firstname,
+                username: username,
+                password: password,
+                field: field,
+            };
+
+            var database = firebase.database();
+
+            if (role == "Tutor"){
+                var ref = database.ref("Tutors");
+
+            }
+            else{
+                var ref = database.ref("Students");
+
+            }
+            ref.push(data);
+            window.alert("done");
+        }
+        else{
+            window.alert("Warning: passwords must match");
+
+        }
+
+    })
+    </script>
+</html>
